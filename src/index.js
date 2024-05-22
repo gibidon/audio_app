@@ -1,52 +1,67 @@
-import { delegate } from './utils/delegate'
-import winterBackground from './assets/winter-bg.jpg'
-import summerBackground from './assets/summer-bg.jpg'
-import rainBackground from './assets/rainy-bg.jpg'
+import rainAudio from './assets/sounds/rain.mp3';
+import winterAudio from './assets/sounds/winter.mp3';
+import summerAudio from './assets/sounds/summer.mp3';
 
-import './index.scss'
+import rainIcon from './assets/icons/cloud-rain.svg';
+import winterIcon from './assets/icons/cloud-snow.svg';
+import summerIcon from './assets/icons/sun.svg';
+import pauseIcon from './assets/icons/pause.svg';
 
-const audio_wrapper = document.querySelector('.audio_wrapper')
-const rain_audio = document.querySelector('.rain_audio')
-const summer_audio = document.querySelector('.summer_audio')
-const winter_audio = document.querySelector('.winter_audio')
-const volumeControl = document.querySelector('.volume_control')
-const body = document.querySelector('body')
+import './index.scss';
 
-const audioElems = [rain_audio, summer_audio, winter_audio]
+const volumeControl = document.querySelector('.volume_control');
 
-function stopOtherAudio(playingAudio) {
-  const audiosToPause = audioElems.filter((audio) => audio !== playingAudio)
+class WeatherCard {
+  constructor(selector, audioUrl, icon) {
+    this.rootElem = document.querySelector(selector);
+    this.audio = this.rootElem.querySelector('audio');
+    this.iconElem = this.rootElem.querySelector('.icon');
 
-  audiosToPause.forEach((audio) => audio.pause())
+    this.audio.src = audioUrl;
+    this.icon = icon;
+
+    this.rootElem.addEventListener('click', () => this.handleClick());
+  }
+  play() {
+    this.audio.play();
+  }
+  pause() {
+    this.audio.pause();
+  }
+
+  handleClick() {
+    if (this.audio.paused) {
+      this.play();
+      this.iconElem.src = this.icon;
+      stopOtherAudios(this.audio);
+    } else {
+      this.pause();
+      this.iconElem.src = pauseIcon;
+    }
+  }
 }
 
-function changeBackground(backgroundImage) {
-  body.style.backgroundImage = `url(${backgroundImage})`
+const rainCard = new WeatherCard('.rain_card', rainAudio, rainIcon);
+const winterCard = new WeatherCard('.winter_card', winterAudio, winterIcon);
+const summerCard = new WeatherCard('.summer_card', summerAudio, summerIcon);
+
+const allCards = [rainCard, winterCard, summerCard];
+
+function stopOtherAudios(playingAudio) {
+  const cardsToPause = allCards.filter((card) => card.audio !== playingAudio);
+
+  cardsToPause.forEach((card) => {
+    console.log('card', card);
+    card.audio.pause();
+
+    //for correct icon showing. If audio has not been launched before,icon doesn't change to paused
+    if (card.audio.currentTime !== 0.0) {
+      card.iconElem.src = pauseIcon;
+    }
+  });
 }
-
-function applyPlayStopLogic(audioElem) {
-  if (audioElem.paused) {
-    audioElem.play()
-    stopOtherAudio(audioElem)
-  } else audioElem.pause()
-}
-
-delegate(audio_wrapper, '.rain_btn', 'click', function () {
-  applyPlayStopLogic(rain_audio)
-  changeBackground(rainBackground)
-})
-
-delegate(audio_wrapper, '.winter_btn', 'click', function () {
-  applyPlayStopLogic(winter_audio)
-  changeBackground(winterBackground)
-})
-
-delegate(audio_wrapper, '.summer_btn', 'click', function () {
-  applyPlayStopLogic(summer_audio)
-  changeBackground(summerBackground)
-})
 
 volumeControl.addEventListener('input', () => {
-  const playingAudio = audioElems.find((audio) => audio.paused === false)
-  playingAudio.volume = volumeControl.value
-})
+  const playingCard = allCards.find((card) => card.audio.paused === false);
+  playingCard.audio.volume = volumeControl.value;
+});

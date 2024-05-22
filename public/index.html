@@ -10,30 +10,38 @@
   <body>
     <div class="title">Weather sounds</div>
     <div class="audio_wrapper">
-      <div class="rain_btn">
-        <img src="./cloud-rain.svg" alt="cloud-rain" />
-        <audio src="./rain.mp3" type="audio/mpeg" class="rain_audio">
+      <div class="card rain_card">
+        <img src="./cloud-rain.svg" alt="cloud-rain" class="icon" />
+
+        <audio type="audio/mpeg" class="rain_audio">
           Your browser doesn't support this audio.
         </audio>
       </div>
 
-      <div class="winter_btn">
-        <img src="./cloud-snow.svg" alt="cloud-snow" />
-        <audio src="./winter.mp3" type="audio/mpeg" class="winter_audio">
+      <div class="card winter_card">
+        <img src="./cloud-snow.svg" alt="cloud-snow" class="icon" />
+        <audio type="audio/mpeg" class="winter_audio">
           Your browser doesn't support this audio.
         </audio>
       </div>
 
-      <div class="summer_btn">
-        <img src="./sun.svg" alt="sun" />
-        <audio src="./summer.mp3" type="audio/mpeg" class="summer_audio">
+      <div class="card summer_card">
+        <img src="./sun.svg" alt="sun" class="icon" />
+        <audio type="audio/mpeg" class="summer_audio">
           Your browser doesn't support this audio.
         </audio>
       </div>
     </div>
 
     <div class="volume_control_panel">
-      <input type="range" class="volume_control" min="0" max="1" step="0.01" value="1" />
+      <input
+        type="range"
+        class="volume_control"
+        min="0"
+        max="1"
+        step="0.01"
+        value="1"
+      />
     </div>
   </body>
 </html>

@@ -1,7 +1,7 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -28,7 +28,6 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
   ],
-  // alias: { "@": path.resolve(__dirname, "src") },
   module: {
     rules: [
       {
@@ -53,17 +52,6 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf|png|svg|jpg|jpeg|gif|mp3)$/i,
         type: 'asset/resource',
       },
-      // {
-      // 	test: /\.(png|svg|jpg|jpeg|gif)$/i,
-      // 	type: "asset/resource",
-      // },
-      // {
-      //   test: /\.[tj]sx?$/,
-      //   use: 'ts-loader',
-      //   exclude: /node_modules/,
-      // },
-
-      // { test: /\.(ogg|mp3|wav|mpe?g)$/i, loader: 'file-loader' },
     ],
   },
-}
+};
