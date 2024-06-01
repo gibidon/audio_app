@@ -48,9 +48,9 @@ const summerCard = new WeatherCard('.summer_card', summerAudio, summerIcon);
 const allCards = [rainCard, winterCard, summerCard];
 
 function stopOtherAudios(playingAudio) {
-  const cardsToPause = allCards.filter((card) => card.audio !== playingAudio);
+  const cardsToPause = allCards.filter(card => card.audio !== playingAudio);
 
-  cardsToPause.forEach((card) => {
+  cardsToPause.forEach(card => {
     console.log('card', card);
     card.audio.pause();
 
@@ -62,6 +62,6 @@ function stopOtherAudios(playingAudio) {
 }
 
 volumeControl.addEventListener('input', () => {
-  const playingCard = allCards.find((card) => card.audio.paused === false);
+  const playingCard = allCards.find(card => card.audio.paused === false);
   playingCard.audio.volume = volumeControl.value;
 });
